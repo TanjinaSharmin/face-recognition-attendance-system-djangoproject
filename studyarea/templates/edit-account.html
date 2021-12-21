@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600&display=swap" rel="stylesheet">
+      <script src="https://kit.fontawesome.com/dbaff046ae.js" crossorigin="anonymous"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script type="text/javascript" src="{% static 'main/js/ajax.js' %}"></script>
+      <title>StudyArea</title>
+      <style>
+          body{
+         font-family: 'Baloo 2', cursive;
+         }
+         .logo{
+         width:150px;
+         }
+         .navbar{
+         background-color: #6C63FF;
+         }
+         .nav-link{
+         color:#f6f6fa !important;
+         }
+         .nav-link:hover{
+         color:#2f3640 !important
+         }
+         .dropdown-item{
+         color: #fd9644; !important;
+         }
+         .dropdown-item:hover{
+         background-color: #ffbe76;
+         color:#636e72 !important;
+         }
+         .login-button{
+         background-color: #f6f6fa !important;
+         }
+         .login-button a{
+         color:  #6C63FF !important;
+         text-decoration: none;
+         }
+         .login-button:hover{
+         background-color: #F8EFBA !important;
+         }
+         .logout li a{
+         color: #636e72;
+         }
+         .text{
+         color: #fd9644;
+         }
+         h4{
+         color: #fd9644;
+         }
+         a{
+         color: #636e72;
+         }
+         .signup-button{
+         background-color: #fd9644;
+         color: #f6f6fa;
+         }
+         .signup-button:hover{
+         background-color: #ffbe76;
+         color: #f6f6fa;
+         }
+         .card-body p b {
+         color: #636e72 ;
+         }
+         .fot-colr{
+         background-color: #fd9644;
+         }
+         .fotter-color h5,p,a{
+         color: #f6f6fa;
+         }
+         .fotter-color a:hover{
+         color:#636e72 ;
+         }
+         .hr{
+         color: #f6f6fa;
+         }
+
+         .btn-blue{
+            background-color: #6C63FF !important;
+            color: #f6f6fa !important;
+            }
+         .btn-white{
+            background-color: #f6f6fa !important;
+            color: #6C63FF !important;
+            }
+
+            .btn-icon{
+         border:none;
+         display: inline;
+         background-color:#fff;
+         color:#7f8c8d;
+         text-decoration:none;
+         }
+         .space form{
+         display: inline;
+         }
+
+         .user
+         {
+         width:40px;
+         }
+
+         .logoutuser{
+         color: #00BFA6 !important;
+         text-decoration:none;
+         }
+         .dropdown-menu.logout{
+         min-width: 2rem !important;
+         height:60px !important;
+         }
+
+         .logout li a{
+         color: #636e72;
+         }
+
+      </style>
+   </head>
+   <body>
+   <!----------------------------------nav-------------------------------------------->
+         <nav class="navbar navbar-expand-lg navbar-light ">
+            <div class="container-fluid">
+               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+               </button>
+               <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                     <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                     </li>
+                  </ul>
+                  </div>
+      <!------------------------------------ Logout dropdown --------------------------->
+               {% if user.is_authenticated %}
+               <div class="dropdown">
+                  <a class="dropdown-toggle mx-4" href="#"  id="dropdownMenuLink" data-bs-toggle="dropdown">
+                  <img src="{% static 'image/user.png' %}" alt="user-img" class="rounded-circle user">
+                  </a>
+                  <ul class="dropdown-menu logout" aria-labelledby="dropdownMenuLink">
+                     <li><a class="dropdown-item" href="/logout_user"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+                  </ul>
+               </div>
+               {% endif %}
+
+             </div>
+         </nav>
+<!---------------------------------alert---------------------->
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+         <b>{{message}}</b>
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+
+   <br><br><br>
+   <div class="container">
+       <h3>Account</h3>
+       <br>
+
+
+       <div class="col-4">
+       <form action="/edituser" method="post">
+           {% csrf_token %}
+           <label>Username</label>
+           <div class="my-4">
+               <input type="text" class="form-control" name="username" value="{{ edituser.username }}"required>
+           </div>
+           <br><br>
+
+
+          <button type="submit" class="btn mb-4 signup-button"><b>Save Changes</b></button>
+       </form>
+    </div>
+
+
+
+
+</div>
+
+
+
+
+   </body>
+
+</html>

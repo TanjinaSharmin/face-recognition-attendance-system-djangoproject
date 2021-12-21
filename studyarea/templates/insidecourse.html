@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600&display=swap" rel="stylesheet">
+      <script src="https://kit.fontawesome.com/dbaff046ae.js" crossorigin="anonymous"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script type="text/javascript" src="{% static 'main/js/ajax.js' %}"></script>
+      <title>StudyArea</title>
+      <style>
+         body{
+         font-family: 'Baloo 2', cursive;
+         }
+         .logo{
+         width:150px;
+         }
+         .navbar{
+         background-color: #6C63FF;
+         }
+         .nav-link{
+         color:#f6f6fa !important;
+         }
+         .nav-link:hover{
+         color:#2f3640 !important
+         }
+         .dropdown-item{
+         color: #fd9644; !important;
+         }
+         .dropdown-item:hover{
+         background-color: #ffbe76;
+         color:#636e72 !important;
+         }
+         .login-button{
+         background-color: #f6f6fa !important;
+         }
+         .logoutuser{
+         color: #00BFA6 !important;
+         text-decoration:none;
+         }
+         .dropdown-menu.logout{
+         min-width: 2rem !important;
+         height:60px !important;
+         }
+
+         .logout li a{
+         color: #636e72;
+         }
+         .user
+         {
+         width:40px;
+         }
+         .login-button a{
+         color:  #6C63FF !important;
+         text-decoration: none;
+         }
+         .login-button:hover{
+         background-color: #F8EFBA !important;
+         }
+         .logout li a{
+         color: #636e72;
+         }
+         .text{
+         color: #fd9644;
+         }
+         h4{
+         color: #fd9644;
+         }
+         a{
+         color: #636e72;
+         }
+         .signup-button{
+         background-color: #fd9644;
+         color: #f6f6fa;
+         }
+         .signup-button:hover{
+         background-color: #ffbe76;
+         color: #f6f6fa;
+         }
+         .card-body p b {
+         color: #636e72 ;
+         }
+         .fot-colr{
+         background-color: #fd9644;
+         }
+         .fotter-color h5,p,a{
+         color: #f6f6fa;
+         }
+         .fotter-color a:hover{
+         color:#636e72 ;
+         }
+         .hr{
+         color: #f6f6fa;
+         }
+
+         .btn-blue{
+            background-color: #6C63FF !important;
+            color: #f6f6fa !important;
+            }
+         .btn-white{
+            background-color: #f6f6fa !important;
+            color: #6C63FF !important;
+            }
+
+            .btn-icon{
+         border:none;
+         display: inline;
+         background-color:#fff;
+         color:#7f8c8d;
+         text-decoration:none;
+         }
+         .space form{
+         display: inline;
+         }
+      </style>
+   </head>
+<body>
+<!----------------------------------nav-------------------------------------------->
+         <nav class="navbar navbar-expand-lg navbar-light ">
+            <div class="container-fluid">
+               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+               </button>
+               <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                     <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                     </li>
+                  </ul>
+
+
+             <!--------------------------------------- Create post modal ---------------------------------->
+               <!-- Button trigger modal -->
+               <button type="button" class="btn mx-4" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fas fa-plus" style="color:#f6f6fa ;"> Create post</i>
+               </button>
+               <!-- Modal -->
+               <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                           <h5 class="modal-title" id="createModalLabel">Create post</h5>
+                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            {% for i in insidecourse %}
+                           <form action="{% url 'createpost' i.pk %}" method="POST" enctype="multipart/form-data">
+                              {% csrf_token %}
+                              <br>
+                              <label><b>Select course</b></label>
+                              <br>
+                              <select class="form-select" aria-label="Default select example" name="course_name">
+                                {% for i in insidecourse %}
+                                 <option value="{{i.course_name}}">{{i.course_name}}</option>
+                                  {% endfor %}
+
+
+
+                              </select>
+                              <br>
+                              <div class="mb-3">
+                                 <label><b>Attach files & images</b></label>
+                                 <input type="file"  class="form-control"  placeholder="Attach files & images" name="course_file">
+                              </div>
+                              <div class="mb-3">
+                                 <label class="form-label"><b>Write here</b></label>
+                                 <textarea class="form-control"  rows="10" cols="55" name="course_caption" required></textarea>
+                              </div>
+                              <button type="submit" class="btn btn-blue">Post</button>
+                           </form>
+                            {% endfor %}
+
+
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+
+<!------------------------------------------- Upload csv file modal ------------------------------------>
+               <!-- Button trigger modal -->
+               <button type="button" class="btn mx-4" data-bs-toggle="modal" data-bs-target="#uploadModal">
+               <i class="fas fa-file-upload text-white"> Upload csv file</i>
+               </button>
+               <!-- Modal -->
+               <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                           <h5 class="modal-title" id="uploadModalLabel">Upload your csv file</h5>
+                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {% for i in insidecourse %}
+                           <form action="{% url 'uploadcsv' i.course_name %}" method="POST" enctype="multipart/form-data">
+                              {% csrf_token %}
+                              <br>
+                              <br>
+                                <label><b>Select course</b></label>
+                              <br>
+                              <select class="form-select" aria-label="Default select example" name="course_name">
+                                {% for i in insidecourse %}
+                                 <option value="{{i.course_name}}">{{i.course_name}}</option>
+                                  {% endfor %}
+                              </select>
+                              <br>
+
+                              <label><b>Select date</b></label>
+                              <select class="form-select" aria-label="Default select example" name="csvname">
+                                {% for i in insidecourse %}
+                                 <option>{{today_date}}-{{i.course_name}}</option>
+                                  {% endfor %}
+
+                              </select>
+                              <br>
+
+                               <div class="mb-3">
+                                 <label><b>Upload csv file here</b></label>
+                                 <input type="file"  class="form-control"  name="csvfile" required>
+                              </div>
+                               <br>
+                              <button type="submit" class="btn btn-blue">Upload</button>
+                           </form>
+                            {% endfor %}
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+                    {% for i in insidecourse %}
+                   <a href="{% url 'checkattendance' i.course_name %}"><button type="button" class="btn mx-4 text-white"><b>Check attendance</b></button></a>
+                   {% endfor %}
+
+                   <!----------------------------------------- merge csv file button ------------------------------->
+                   {% for i in insidecourse %}
+               <a href="{% url 'attendancecsv' i.course_name %}"><button type="button" class="btn mx-4 text-white"><b>Attendance sheet</b></button></a>
+                   {% endfor %}
+
+
+
+
+
+             <!------------------------------------ Logout dropdown --------------------------->
+               {% if user.is_authenticated %}
+               <div class="dropdown">
+                  <a class="dropdown-toggle mx-4" href="#"  id="dropdownMenuLink" data-bs-toggle="dropdown">
+                  <img src="{% static 'image/user.png' %}" alt="user-img" class="rounded-circle user">
+                  </a>
+                  <ul class="dropdown-menu logout" aria-labelledby="dropdownMenuLink">
+                     <li><a class="dropdown-item" href="/logout_user"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+                  </ul>
+               </div>
+               {% endif %}
+
+             </div>
+             </div>
+         </nav>
+
+      <!---------------------------------alert---------------------->
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+         <b>{{message}}</b>
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+
+<br><br>
+<div class="container">
+
+<div class="row">
+    {% for i in insidecourse %}
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{i.course_name}}</h5>
+        <p class="card-text" style="color:black;">{{i.course_code}}</p>
+        <p class="card-text" style="color:black;"> class code: <b>{{i.class_code}}</b></p>
+          <br><br>
+
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+    </div>
+</div>
+
+<br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-5">
+
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-headingOne" style="width:50%;">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+
+          <b>csv files</b>
+
+      </button>
+    </h2>
+    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+
+      <div class="accordion-body">
+          {% for i in csvfile %}
+
+          <b style="width:50%;">{{i.csvfile}}<a href="{% url 'deletecsvpage' i.pk %}" style="text-decoration:none;"><button type="button" class="btn-icon mx-4"><i class="fas fa-trash"></i></button></a></b>
+          <br>
+
+
+
+          {% endfor %}
+
+      </div>
+
+    </div>
+  </div>
+
+
+        </div>
+        </div>
+
+        <div class="col-7">
+            {% for i in posts %}
+               <div class="card">
+                  <div class="card-header">
+                     <h6>{{i.user}}  <small>{{i.text}}</small>  {{i.course}}  <small>{{i.date.date}}</small>  <small>{{i.date.time}}</small>  </h6>
+                  </div>
+                  <div class="card-body">
+                     <p class="card-text" style="color:black;">{{i.caption}}</p>
+                     {% if i.file %}
+                     <a href="{{ i.file.url }}" download style="color:#636e72;"> <b>{{i.file}}</b> </a><br> <br>
+                     {% endif %}
+                     <hr size="3px">
+                      <div class="space">
+                        <!------------------------------------------- Like -------------------------------------->
+
+
+                        <form action="{% url 'like_post1' i.course %}" method="POST" class="form-like reload" id="{{ i.id }}">
+                           {% csrf_token %}
+                           <input type="hidden" name="post_id" value="{{ i.id }}">
+                           {% if user not in i.likes.all %}
+                           <button type="submit" class="btn-icon"><i class="fas fa-thumbs-up"></i>Like {{i.likes.count}}</button>
+                           {% else %}
+                           <button type="submit" class="btn-icon" style="color:blue;"><i class="fas fa-thumbs-up"></i>Like {{i.likes.count}}</button>
+                           {% endif %}
+                        </form>
+
+                           <!-------------------------------------------- Delete modal -------------------------------------->
+                          <a href="{% url 'deletepage' i.id %}" style="text-decoration:none;"><button type="button" class="btn-icon mx-4"><i class="fas fa-trash"></i> Delete</button></a>
+                        </div>
+                     <hr>
+                     <br>
+
+                      <!---------------------------------------- Comment -------------------------------------------->
+                     <form action="{% url 'addcomment1' i.course %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="post_id" value="{{ i.id }}">
+                        <div class="mb-3">
+                           <textarea class="form-control" name="comment" rows="3" placeholder="comment here..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-blue" style="margin-left:500px;">comment</button>
+                     </form>
+                     <br>
+                      <hr>
+                     {% if not i.comments.all %}
+                     no comments yet...
+                     {% else %}
+                     {% for comment in i.comments.all %}
+                     <strong>{{comment.user}} - {{comment.date}}</strong>
+                     <br>
+                     {{comment.commentbody}}
+                     <br> <br>
+                     {% endfor %}
+                     {% endif %}
+                     <hr>
+
+
+                      </div>
+
+
+        </div>
+            <br>
+{% endfor %}
+    </div>
+
+</div>
+</div>
+
+</div>
+
+
+
+</body>
+   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+   <script type="text/javascript" src = "{% static 'main/js/main.js' %}"></script>
+</html>
